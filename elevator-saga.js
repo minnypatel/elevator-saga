@@ -1,18 +1,14 @@
 {
   init: function(elevators, floors) {
 
-    const elevatorMove = (elevator) => {
-      const getPressedFloorsArray = elevator.getPressedFloors();
-      if(getPressedFloorsArray.length > 0) {
-        elevator.goToFloor(getPressedFloorsArray[0]);
-      }
-      elevator.goToFloor(0);
-    };
-
     elevators.forEach((elevator, index) => {
 
+      elevator.on('floor_button_pressed', (floorNumber) => {
+        elevator.goToFloor(floorNumber)
+      });
+
       elevator.on('idle', () => {
-        elevatorMove(elevator);
+        elevator.goToFloor(0);
       });
 
       elevator.on('floor_button_pressed', (floorNumber) => {
